@@ -2,6 +2,10 @@
 
 java-extractarticle extracts an article (main contents) from HTML.
 
+* [Pre-requirements](#pre-requirements)
+* [Getting started](#getting-started)
+* [How to release](#how-to-release)
+
 ## Pre-requirements
 
 java-extractarticle is available on [GitHub Packages][gp].
@@ -83,6 +87,41 @@ Please read [public document](https://docs.github.com/en/packages/guides/configu
 ## Getting Started
 
 To be written.
+
+```java
+import net.kaoriya.extractarticle.ArticleExtractor;
+
+var r = ArticleExtractor.extract(new java.io.File("./foobar.html"));
+
+// print the article (main contents). [String]
+System.out.println(r.text); 
+
+// print the description (meta[name='description']). [String]
+System.out.println(r.desc);
+
+// print the score: probability of main contents. [double: 0.0~1.0, N/A]
+System.out.println(Double.toString(r.score));
+```
+
+### Score
+
+Extracted article may be wrong depending on HTML contents.  To verify the
+extraction succeeded or not, this extractor provides score for it.
+
+The score is calculated by considering the description is came from the
+article. In other words: how many ratio of description can be found in the
+article.  So it will be very close to 1.0 if better extraction done.
+
+### `extract()` variations
+
+`ArticleExtractor.extract()` has some variations.
+Most basic form is `extract(org.jsoup.nodes.Document doc)`.
+
+Other variations like this:
+
+* `extract(java.lang.String html)`.
+* `extract(java.io.File file) throws java.io.IOException`.
+* `extract(java.io.InputStream in) throws java.io.IOException`
 
 ## How to release
 
