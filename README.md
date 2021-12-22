@@ -112,6 +112,33 @@ The score is calculated by considering the description is came from the
 article. In other words: how many ratio of description can be found in the
 article.  So it will be very close to 1.0 if better extraction done.
 
+(in Japanese)
+
+`extract()` は稀に本文ではないところを抽出して失敗します。
+そのため「descriptionは本文を再利用していることが多い」ことを利用して
+descriptionと本文の類似度を得点化することで、
+本文抽出がどの程度成功しているかを見れるようにしたのが `score` フィールドです。
+
+この得点は次のように計算しています。
+これはつまりdescriptionが本文中にどの程度含まれているかを示しています。
+
+```
+count({descの2-gram index} ∩ {本文の2-gram index})
+--------------------------------------------------
+            count({descの2-gram index})
+```
+
+この `score` がおよそ 0.8 から 0.9 を超えていれ
+ほぼ間違いなく正しく本文を抽出できたと考えられます。
+
+またこの判定は以下のようなケースでは正しく機能しません。
+しかしそのようなコンテンツは稀であるか、
+あっても写真しかないブログのように本文に解析価値を見出しにくいケースであるため、
+本ライブラリでは救済策を用意していません。
+
+* そもそもdescriptionが設定されてない
+* descriptionに本文とは関係ない文章が設定されている
+
 ### `extract()` variations
 
 `ArticleExtractor.extract()` has some variations.
