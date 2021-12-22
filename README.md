@@ -99,7 +99,7 @@ System.out.println(r.text);
 // print the description (meta[name='description']). [String]
 System.out.println(r.desc);
 
-// print the score: probability of main contents. [double: 0.0~1.0, N/A]
+// print the score: probability of main contents. [double: 0.0~1.0, NaN]
 System.out.println(Double.toString(r.score));
 ```
 
