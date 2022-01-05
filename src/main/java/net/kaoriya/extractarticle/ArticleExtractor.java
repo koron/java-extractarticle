@@ -9,12 +9,18 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.select.Selector;
 
+/** ArticleExtractor extracts artcile in raw text. */
 public class ArticleExtractor {
 
+    /** Result is a result of artcile extraction. */
     public static class Result  {
+        /** Extracted text of article . */
         public String text;
+        /** Description in meta. */
         public String desc;
+        /** Score for extraction result. */
         public double score;
+        /** Result creates a result object. */
         public Result(String text, String desc, double score) {
             this.text = text;
             this.desc = desc;
@@ -78,6 +84,7 @@ public class ArticleExtractor {
         return (double)cnt / (double)base.count();
     }
 
+    /** extracts an article from Document. */
     public static Result extract(Document doc) {
         var r4j = new Readability4J("", doc);
         var article = r4j.parse();
@@ -87,14 +94,17 @@ public class ArticleExtractor {
         return new Result(text, desc, score);
     }
 
+    /** extracts an article from HTML string. */
     public static Result extract(String html) {
         return extract(Jsoup.parse(html));
     }
 
+    /** extracts an article from a File. */
     public static Result extract(File file) throws IOException {
         return extract(Jsoup.parse(file, "UTF-8"));
     }
 
+    /** extracts an article from a InputStream. */
     public static Result extract(InputStream in) throws IOException {
         return extract(Jsoup.parse(in, "UTF-8", ""));
     }
