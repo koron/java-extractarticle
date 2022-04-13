@@ -62,7 +62,6 @@ public class ArticleExtractor {
     static String extractMetaDesc(Document doc) {
         var el = Selector.selectFirst("meta[name='description']", doc);
         if (el == null) {
-            System.out.println("HERE");
             return "";
         }
         return el.attributes().get("content");
